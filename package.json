@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"pnpm build:server --watch\" \"nodemon --watch dist/server dist/server/index.js\"",
+    "dev": "pnpm clean && concurrently \"pnpm build:server --watch\" \"wait-on dist/server/index.js && pnpm start:server --watch dist/server\"",
     "clean": "rimraf dist",
     "build": "pnpm clean && pnpm build:server && pnpm build:client",
     "build:client": "vite build",
     "build:server": "esbuild src/server/index.ts --platform=node --sourcemap=inline --target=node18.12 --packages=external --outdir=dist/server",
+    "start:server": "nodemon dist/server/index.js",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "nodemon": "^2.0.20",
     "rimraf": "^3.0.2",
     "typescript": "^4.9.3",
-    "vite": "^4.0.0"
+    "vite": "^4.0.0",
+    "wait-on": "^7.0.1"
   }
 }
