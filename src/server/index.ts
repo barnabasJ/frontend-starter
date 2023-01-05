@@ -6,9 +6,6 @@ import { createServer as createViteServer } from 'vite'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-console.log(import.meta)
-
-
 const envToLogger = {
     development: {
         transport: {
@@ -26,7 +23,6 @@ const envToLogger = {
 async function startServer() {
     const app = fastify({ logger: envToLogger['development'] })
 
-    console.log('http proxy register')
     await app.register(import('@fastify/http-proxy'), {
         upstream: 'https://swapi-graphql.netlify.app',
         prefix: '/api',

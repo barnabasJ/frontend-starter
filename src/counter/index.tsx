@@ -1,2 +1,2 @@
 export * from './slice'
-export * from './counter.tsx'
+export * from './counter'
