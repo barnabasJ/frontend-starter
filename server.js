@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import fastify from 'fastify'
 import { createServer as createViteServer } from 'vite'
 
+console.log(import.meta)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 async function startServer() {

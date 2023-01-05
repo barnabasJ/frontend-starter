@@ -1,14 +1,12 @@
-import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import './App.css'
-import { store } from '../store/store'
-import type { Store } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import { Counter } from '../counter/counter'
+
+import { store } from '@/store/store'
+import { Counter } from '@/counter/counter'
+import { Films } from '../films/Films'
 
 function App() {
-
-
     return (
         <Provider store={store}>
             <div className="App">
@@ -28,7 +26,9 @@ function App() {
                     Click on the Vite and React logos to learn more
                 </p>
             </div>
+            <Films />
         </Provider>
+
     )
 }
 
