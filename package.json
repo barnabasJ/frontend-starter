@@ -15,11 +15,13 @@
   "dependencies": {
     "@fastify/express": "^2.3.0",
     "@fastify/middie": "^8.1.0",
+    "@reduxjs/toolkit": "^1.9.1",
     "@types/node": "^18.11.18",
     "esbuild": "^0.16.11",
     "fastify": "^4.10.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "@vitejs/plugin-react": "^3.0.0",
     "concurrently": "^7.6.0",
     "nodemon": "^2.0.20",
+    "pino-pretty": "^9.1.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",

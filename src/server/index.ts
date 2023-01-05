@@ -6,8 +6,23 @@ import { createServer as createViteServer } from 'vite'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+
+const envToLogger = {
+  development: {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+      },
+    },
+  },
+  production: true,
+  test: false,
+}
+
 async function startServer() {
-    const app = fastify({ logger: true })
+    const app = fastify({ logger: envToLogger['development'] })
 
     await app.register(import('@fastify/express'))
 
@@ -27,7 +42,7 @@ async function startServer() {
         try {
             // 1. Read index.html
             let template = fs.readFileSync(
-                path.resolve(__dirname,'../../', 'index.html'),
+                path.resolve(__dirname, '../../', 'index.html'),
                 'utf-8',
             )
 
@@ -39,9 +54,8 @@ async function startServer() {
             // 3. Load the server entry. vite.ssrLoadModule automatically transforms
             //    your ESM source code to be usable in Node.js! There is no bundling
             //    required, and provides efficient invalidation similar to HMR.
-        const { render } = await vite.ssrLoadModule(
-
-                path.resolve(__dirname,'../../',  'src/ssr-entry.tsx'))
+            const { render } = await vite.ssrLoadModule(
+                path.resolve(__dirname, '../../', 'src/ssr-entry.tsx'))
 
             // 4. render the app HTML. This assumes entry-server.js's exported `render`
             //    function calls appropriate framework SSR APIs,
@@ -62,7 +76,7 @@ async function startServer() {
     })
 
 
-    app.listen({port: 5123})
+    app.listen({ port: 5123 })
 }
 
 startServer()
