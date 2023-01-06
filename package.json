@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm clean && concurrently \"pnpm build:server --watch\" \"wait-on dist/server/index.js && pnpm start:server --watch dist/server\"",
+    "dev": "pnpm clean && concurrently \"pnpm build:server\" \"wait-on dist/server/index.cjs && pnpm start:server --watch dist/server\"",
     "clean": "rimraf dist",
     "build": "pnpm clean && pnpm build:server && pnpm build:client",
     "build:client": "vite build",
     "build:server": "node build.js",
-    "start:server": "nodemon dist/server/index.js",
+    "start:server": "nodemon dist/server/index.cjs",
     "preview": "vite preview",
     "graphql-codegen": "graphql-codegen --config codegen.yml",
     "watch-codegen": "graphql-codegen --config codegen.yml --watch 'src/**/*.graphql'"
@@ -23,6 +23,7 @@
     "@types/node": "^18.11.18",
     "esbuild": "^0.16.14",
     "fastify": "^4.11.0",
+    "fastify-plugin": "^4.4.0",
     "graphql": "^16.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -30,6 +31,7 @@
     "react-router-dom": "^6.6.1"
   },
   "devDependencies": {
+    "@esbuild-plugins/tsconfig-paths": "^0.0.4",
     "@graphql-codegen/add": "^3.2.3",
     "@graphql-codegen/cli": "2.16.3",
     "@graphql-codegen/introspection": "^2.2.3",
@@ -43,12 +45,13 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.1",
     "concurrently": "^7.6.0",
-    "esbuild-plugin-d-ts-path-alias": "^2.0.0",
+    "esbuild-plugin-path-alias": "^1.0.7",
     "nodemon": "^2.0.20",
     "pino-pretty": "^9.1.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.9.3",
     "vite": "^4.0.4",
+    "vite-tsconfig-paths": "^4.0.3",
     "wait-on": "^7.0.1"
   }
 }

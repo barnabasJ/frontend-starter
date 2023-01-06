@@ -1,13 +1,20 @@
 import { build } from 'esbuild';
-import { dTSPathAliasPlugin } from 'esbuild-plugin-d-ts-path-alias';
+import {resolve, dirname} from 'path'
+import {fileURLToPath} from 'url'
+import  aliasPath  from 'esbuild-plugin-path-alias';
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 build({
     watch: true,
-    target: 'esnext',
+    bundle: true,
+    target: 'node18',
     packages: 'external',
     platform: 'node',
     sourcemap: 'inline',
     entryPoints: ['./src/server/index.ts'],
-    outdir: './dist/server',
-    plugins: [dTSPathAliasPlugin()],
+    outfile: './dist/server/index.cjs',
+    plugins: [aliasPath({
+        '@':resolve(__dirname, './src')
+    })],
 });

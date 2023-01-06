@@ -2,13 +2,13 @@ import reactLogo from '../assets/react.svg'
 import './App.css'
 import { Provider } from 'react-redux'
 
-import { store } from '@/store/store'
+import { createStore } from '@/store/store'
 import { Counter } from '@/counter/counter'
 import { Films } from '../films/Films'
 
-function App() {
+function App(store: Store) {
     return (
-        <Provider store={store}>
+        <Provider store={createStore()}>
             <div className="App">
                 <div>
                     <a href="https://vitejs.dev" target="_blank">
@@ -26,6 +26,7 @@ function App() {
                     Click on the Vite and React logos to learn more
                 </p>
             </div>
+            <Films />
         </Provider>
 
     )

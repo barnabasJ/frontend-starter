@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@esbuild-plugins/tsconfig-paths': ^0.0.4
   '@fastify/express': ^2.3.0
   '@fastify/http-proxy': ^8.4.0
   '@fastify/middie': ^8.1.0
@@ -22,7 +23,10 @@ specifiers:
   concurrently: ^7.6.0
   esbuild: ^0.16.14
   esbuild-plugin-d-ts-path-alias: ^2.0.0
+  esbuild-plugin-path-alias: ^1.0.7
+  esbuild-ts-paths: ^1.1.3
   fastify: ^4.11.0
+  fastify-plugin: ^4.4.0
   graphql: ^16.6.0
   nodemon: ^2.0.20
   pino-pretty: ^9.1.1
@@ -33,6 +37,7 @@ specifiers:
   rimraf: ^3.0.2
   typescript: ^4.9.3
   vite: ^4.0.4
+  vite-tsconfig-paths: ^4.0.3
   wait-on: ^7.0.1
 
 dependencies:
@@ -44,6 +49,7 @@ dependencies:
   '@types/node': 18.11.18
   esbuild: 0.16.14
   fastify: 4.11.0
+  fastify-plugin: 4.4.0
   graphql: 16.6.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -51,6 +57,7 @@ dependencies:
   react-router-dom: 6.6.1_biqbaboplfbrettd7655fr4n2y
 
 devDependencies:
+  '@esbuild-plugins/tsconfig-paths': 0.0.4_e7rtz5ylxywqv3lfs7enu53p44
   '@graphql-codegen/add': 3.2.3_graphql@16.6.0
   '@graphql-codegen/cli': 2.16.3_xcqthgbenw3hhig2jxkpzsllxu
   '@graphql-codegen/introspection': 2.2.3_graphql@16.6.0
@@ -65,11 +72,14 @@ devDependencies:
   '@vitejs/plugin-react': 3.0.1_vite@4.0.4
   concurrently: 7.6.0
   esbuild-plugin-d-ts-path-alias: 2.0.0_e7rtz5ylxywqv3lfs7enu53p44
+  esbuild-plugin-path-alias: 1.0.7_esbuild@0.16.14
+  esbuild-ts-paths: 1.1.3
   nodemon: 2.0.20
   pino-pretty: 9.1.1
   rimraf: 3.0.2
   typescript: 4.9.4
   vite: 4.0.4_@types+node@18.11.18
+  vite-tsconfig-paths: 4.0.3_gl4qsmwzp7wy5uclz4tx77gbli
   wait-on: 7.0.1
 
 packages:
@@ -766,6 +776,21 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+    dev: true
+
+  /@esbuild-plugins/tsconfig-paths/0.0.4_e7rtz5ylxywqv3lfs7enu53p44:
+    resolution: {integrity: sha512-/86k8BmhfJOFoFLR2oKtoxUVUpIYBtJy29QSM5TXzZP8vdjuMPtXSUeCL+8Aa2GZ3to2k6VD9WLBE9OU+j1yQQ==}
+    peerDependencies:
+      esbuild: '*'
+      typescript: '*'
+    dependencies:
+      debug: 4.3.4
+      esbuild: 0.16.14
+      find-up: 5.0.0
+      strip-json-comments: 3.1.1
+      typescript: 4.9.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@esbuild/android-arm/0.16.14:
@@ -2627,7 +2652,7 @@ packages:
       supports-color:
         optional: true
     dependencies:
-      ms: 2.1.2
+      ms: 2.1.3
       supports-color: 5.5.0
     dev: true
 
@@ -2750,6 +2775,21 @@ packages:
       chalk: 4.1.2
       esbuild: 0.16.14
       typescript: 4.9.4
+    dev: true
+
+  /esbuild-plugin-path-alias/1.0.7_esbuild@0.16.14:
+    resolution: {integrity: sha512-0Be2FjvykTNc8kWrpNmZEopdbGLG+K1jKRwQ9HtBZCQb004C3P7p5HcYxciet+VXtblpeIWL7UFyogz/iMq/cw==}
+    peerDependencies:
+      esbuild: '*'
+    dependencies:
+      esbuild: 0.16.14
+    dev: true
+
+  /esbuild-ts-paths/1.1.3:
+    resolution: {integrity: sha512-qV8WVCcMhQplEfqeu1VPa7llPL9NXpEES275z8z3FHhrescVKNzLSawGOINpmPTYo+WFUiKKLwSFcM0JoQQ5eg==}
+    dependencies:
+      fast-glob: 3.2.12
+      normalize-path: 3.0.0
     dev: true
 
   /esbuild/0.16.14:
@@ -3026,6 +3066,14 @@ packages:
       path-exists: 4.0.0
     dev: true
 
+  /find-up/5.0.0:
+    resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
+    engines: {node: '>=10'}
+    dependencies:
+      locate-path: 6.0.0
+      path-exists: 4.0.0
+    dev: true
+
   /follow-redirects/1.15.2:
     resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
     engines: {node: '>=4.0'}
@@ -3152,6 +3200,10 @@ packages:
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 3.0.0
+    dev: true
+
+  /globrex/0.1.2:
+    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
 
   /graphql-config/4.3.6_xcqthgbenw3hhig2jxkpzsllxu:
@@ -3629,6 +3681,13 @@ packages:
       p-locate: 4.1.0
     dev: true
 
+  /locate-path/6.0.0:
+    resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
+    engines: {node: '>=10'}
+    dependencies:
+      p-locate: 5.0.0
+    dev: true
+
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: true
@@ -3947,6 +4006,13 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       p-limit: 2.3.0
+    dev: true
+
+  /p-locate/5.0.0:
+    resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
+    engines: {node: '>=10'}
+    dependencies:
+      p-limit: 3.1.0
     dev: true
 
   /p-map/4.0.0:
@@ -4787,6 +4853,19 @@ packages:
       yn: 3.1.1
     dev: true
 
+  /tsconfck/2.0.2_typescript@4.9.4:
+    resolution: {integrity: sha512-H3DWlwKpow+GpVLm/2cpmok72pwRr1YFROV3YzAmvzfGFiC1zEM/mc9b7+1XnrxuXtEbhJ7xUSIqjPFbedp7aQ==}
+    engines: {node: ^14.13.1 || ^16 || >=18, pnpm: ^7.18.0}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.3.5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 4.9.4
+    dev: true
+
   /tslib/2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
     dev: true
@@ -4904,6 +4983,20 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
     dev: false
+
+  /vite-tsconfig-paths/4.0.3_gl4qsmwzp7wy5uclz4tx77gbli:
+    resolution: {integrity: sha512-gRO2Q/tOkV+9kMht5tz90+IaEKvW2zCnvwJV3tp2ruPNZOTM5rF+yXorJT4ggmAMYEaJ3nyXjx5P5jY5FwiZ+A==}
+    peerDependencies:
+      vite: '>2.0.0-0'
+    dependencies:
+      debug: 4.3.4
+      globrex: 0.1.2
+      tsconfck: 2.0.2_typescript@4.9.4
+      vite: 4.0.4_@types+node@18.11.18
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
 
   /vite/4.0.4_@types+node@18.11.18:
     resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}

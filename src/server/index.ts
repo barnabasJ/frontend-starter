@@ -1,10 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import fastify from 'fastify'
 import { createServer as createViteServer } from 'vite'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+import storePlugin from './store-plugin'
 
 const envToLogger = {
     development: {
@@ -27,12 +25,13 @@ async function startServer() {
         upstream: 'https://swapi-graphql.netlify.app',
         prefix: '/api',
         rewritePrefix: '/.netlify/functions/index',
-        preHandler: (...args) => { console.log('prehandler', { args }); args[2]() }
     })
 
     await app.register(async (f, _, done) => {
 
-        f.get('/*', () => undefined)
+        f.get('/*', () => undefined) // needed to make sure fastify calls the middleware attached in here
+
+        await f.register(storePlugin)
 
         await f.register(import('@fastify/express'))
 
@@ -70,7 +69,7 @@ async function startServer() {
                 // 4. render the app HTML. This assumes entry-server.js's exported `render`
                 //    function calls appropriate framework SSR APIs,
                 //    e.g. ReactDOMServer.renderToString()
-                const appHtml = await render(url)
+                const appHtml = await render(url, req.store)
 
                 // 5. Inject the app-rendered HTML into the template.
                 const html = template.replace(`<!--ssr-outlet-->`, appHtml)
@@ -86,7 +85,6 @@ async function startServer() {
         })
         done()
     })
-
 
     app.listen({ port: 5123 })
 }
