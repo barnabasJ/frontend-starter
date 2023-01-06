@@ -18,7 +18,16 @@ const envToLogger = {
     test: false,
 }
 
-async function startServer() {
+function resolve (p: string) {
+    return path.resolve(__dirname, p)
+}
+
+async function startServer(
+  root = process.cwd(),
+  isProd = process.env.NODE_ENV === 'production',
+) {
+
+      console.log({isProd})
     const app = fastify({ logger: envToLogger['development'] })
 
     await app.register(import('@fastify/http-proxy'), {
@@ -29,41 +38,58 @@ async function startServer() {
 
     await app.register(async (f, _, done) => {
 
-        f.get('/*', () => undefined) // needed to make sure fastify calls the middleware attached in here
+        if (isProd) {
+        f.register(import('@fastify/static'), {
+            root: path.join(__dirname, '../client/assets'),
+            prefix: '/assets/'
+        })
+        }
+
 
         await f.register(storePlugin)
 
-        await f.register(import('@fastify/express'))
+        let vite
+        if (!isProd) {
+            await f.register(import('@fastify/express'))
 
-        const vite = await createViteServer({
-            server: {
-                middlewareMode: true
-            },
-            appType: 'custom',
-        })
+            vite = await createViteServer({
+                server: {
+                    middlewareMode: true
+                },
+                appType: 'custom',
+            })
 
-        f.use(vite.middlewares)
+            f.use(vite.middlewares)
+        }
 
 
-        f.use('*', async (req, res, next) => {
+        f.get('/*', async (req, res) => {
+            console.log({req, res})
             const url = req.originalUrl
+
+            console.log('get "/"')
 
             try {
                 // 1. Read index.html
-                let template = fs.readFileSync(
-                    path.resolve(__dirname, '../../', 'index.html'),
+                let template =
+                    fs.readFileSync(
+                        isProd ?
+    path.resolve(__dirname, '../client/index.html')
+                    : path.resolve(__dirname, '../../', 'index.html'),
                     'utf-8',
                 )
 
                 // 2. Apply Vite HTML transforms. This injects the Vite HMR client, and
                 //    also applies HTML transforms from Vite plugins, e.g. global preambles
                 //    from @vitejs/plugin-react
-                template = await vite.transformIndexHtml(url, template)
+                // template = await vite.transformIndexHtml(url, template)
 
                 // 3. Load the server entry. vite.ssrLoadModule automatically transforms
                 //    your ESM source code to be usable in Node.js! There is no bundling
                 //    required, and provides efficient invalidation similar to HMR.
-                const { render } = await vite.ssrLoadModule(
+                const { render } =
+                    isProd ? await import('./ssr-entry.cjs')
+                    : await vite?.ssrLoadModule(
                     path.resolve(__dirname, '../../', 'src/ssr-entry.tsx'))
 
                 // 4. render the app HTML. This assumes entry-server.js's exported `render`
@@ -75,12 +101,14 @@ async function startServer() {
                 const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
                 // 6. Send the rendered HTML back.
-                res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+                res.code(200)
+                res.header( 'Content-Type', 'text/html' )
+                res.send(html)
             } catch (e) {
+                console.log(e)
                 // If an error is caught, let Vite fix the stack trace so it maps back to
                 // your actual source code.
-                vite.ssrFixStacktrace(e)
-                next(e)
+                vite?.ssrFixStacktrace(e)
             }
         })
         done()

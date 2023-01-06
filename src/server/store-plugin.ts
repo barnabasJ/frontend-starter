@@ -14,7 +14,8 @@ const storePlugin = fp(function (fastify: FastifyInstance, _: unknown, done: () 
 
     fastify.decorateRequest('store', undefined)
 
-    fastify.addHook('preHandler', (req, res, done) => {
+    fastify.addHook('preHandler', async (req) => {
+        console.log('store hook')
         req.store = createStore()
     })
     done()

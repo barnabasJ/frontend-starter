@@ -5,6 +5,7 @@ specifiers:
   '@fastify/express': ^2.3.0
   '@fastify/http-proxy': ^8.4.0
   '@fastify/middie': ^8.1.0
+  '@fastify/static': ^6.6.0
   '@graphql-codegen/add': ^3.2.3
   '@graphql-codegen/cli': 2.16.3
   '@graphql-codegen/introspection': ^2.2.3
@@ -22,9 +23,7 @@ specifiers:
   '@vitejs/plugin-react': ^3.0.1
   concurrently: ^7.6.0
   esbuild: ^0.16.14
-  esbuild-plugin-d-ts-path-alias: ^2.0.0
   esbuild-plugin-path-alias: ^1.0.7
-  esbuild-ts-paths: ^1.1.3
   fastify: ^4.11.0
   fastify-plugin: ^4.4.0
   graphql: ^16.6.0
@@ -44,6 +43,7 @@ dependencies:
   '@fastify/express': 2.3.0
   '@fastify/http-proxy': 8.4.0
   '@fastify/middie': 8.1.0
+  '@fastify/static': 6.6.0
   '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
   '@rtk-query/graphql-request-base-query': 2.2.0_etd5g4eczihdi2xrsdpdqidyrm
   '@types/node': 18.11.18
@@ -71,9 +71,7 @@ devDependencies:
   '@types/react-dom': 18.0.10
   '@vitejs/plugin-react': 3.0.1_vite@4.0.4
   concurrently: 7.6.0
-  esbuild-plugin-d-ts-path-alias: 2.0.0_e7rtz5ylxywqv3lfs7enu53p44
   esbuild-plugin-path-alias: 1.0.7_esbuild@0.16.14
-  esbuild-ts-paths: 1.1.3
   nodemon: 2.0.20
   pino-pretty: 9.1.1
   rimraf: 3.0.2
@@ -969,6 +967,11 @@ packages:
     requiresBuild: true
     optional: true
 
+  /@fastify/accept-negotiator/1.1.0:
+    resolution: {integrity: sha512-OIHZrb2ImZ7XG85HXOONLcJWGosv7sIvM2ifAPQVhg9Lv7qdmMBNVaai4QTdyuaqbKM5eO6sLSQOYI7wEQeCJQ==}
+    engines: {node: '>=14'}
+    dev: false
+
   /@fastify/ajv-compiler/3.5.0:
     resolution: {integrity: sha512-ebbEtlI7dxXF5ziNdr05mOY8NnDiPB1XvAlLHctRt/Rc+C3LCOVW5imUVX+mhvUhnNzmPBHewUkOFgGlCxgdAA==}
     dependencies:
@@ -1028,6 +1031,20 @@ packages:
       pump: 3.0.0
       tiny-lru: 10.0.1
       undici: 5.14.0
+    dev: false
+
+  /@fastify/static/6.6.0:
+    resolution: {integrity: sha512-UiYSN2dUmDZ48M40xdIwY1dPwSSYD7c+wtoIQP8y7wyxCwcUtf1YT5/Q4n1uJsBF1fySvuo9njQZKlHeiKy4HQ==}
+    dependencies:
+      '@fastify/accept-negotiator': 1.1.0
+      content-disposition: 0.5.4
+      fastify-plugin: 4.4.0
+      glob: 8.0.3
+      p-limit: 3.1.0
+      readable-stream: 4.2.0
+      send: 0.18.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@graphql-codegen/add/3.2.3_graphql@16.6.0:
@@ -1949,24 +1966,6 @@ packages:
       - encoding
     dev: true
 
-  /@zerollup/ts-helpers/1.7.18_typescript@4.9.4:
-    resolution: {integrity: sha512-S9zN+y+i5yN/evfWquzSO3lubqPXIsPQf6p9OiPMpRxDx/0totPLF39XoRw48Dav5dSvbIE8D2eAPpXXJxvKwg==}
-    peerDependencies:
-      typescript: '>=3.7.2'
-    dependencies:
-      resolve: 1.22.1
-      typescript: 4.9.4
-    dev: true
-
-  /@zerollup/ts-transform-paths/1.7.18_typescript@4.9.4:
-    resolution: {integrity: sha512-YPVUxvWQVzRx1OBN0Pmkd58+R9FcfUJuwTaPUSoi5rKxuXMtxevTXdfi0w5mEaIH8b0DfL+wg0wFDHiJE+S2zA==}
-    peerDependencies:
-      typescript: '>=3.7.2'
-    dependencies:
-      '@zerollup/ts-helpers': 1.7.18_typescript@4.9.4
-      typescript: 4.9.4
-    dev: true
-
   /abbrev/1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
     dev: true
@@ -2182,7 +2181,6 @@ packages:
 
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
-    dev: true
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
@@ -2231,7 +2229,6 @@ packages:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
     dependencies:
       balanced-match: 1.0.2
-    dev: true
 
   /braces/3.0.2:
     resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
@@ -2765,31 +2762,12 @@ packages:
       is-arrayish: 0.2.1
     dev: true
 
-  /esbuild-plugin-d-ts-path-alias/2.0.0_e7rtz5ylxywqv3lfs7enu53p44:
-    resolution: {integrity: sha512-9e7aSM7grznXo4tv+CWX6iptiOcTAMnMAuVDU2QB3qwwU2Obo/+bSRC0mzvXq8Xnp/f/9UH77MtO7kPldnQSjQ==}
-    peerDependencies:
-      esbuild: ^0.14.0
-      typescript: '>=3.7.2 <4.8'
-    dependencies:
-      '@zerollup/ts-transform-paths': 1.7.18_typescript@4.9.4
-      chalk: 4.1.2
-      esbuild: 0.16.14
-      typescript: 4.9.4
-    dev: true
-
   /esbuild-plugin-path-alias/1.0.7_esbuild@0.16.14:
     resolution: {integrity: sha512-0Be2FjvykTNc8kWrpNmZEopdbGLG+K1jKRwQ9HtBZCQb004C3P7p5HcYxciet+VXtblpeIWL7UFyogz/iMq/cw==}
     peerDependencies:
       esbuild: '*'
     dependencies:
       esbuild: 0.16.14
-    dev: true
-
-  /esbuild-ts-paths/1.1.3:
-    resolution: {integrity: sha512-qV8WVCcMhQplEfqeu1VPa7llPL9NXpEES275z8z3FHhrescVKNzLSawGOINpmPTYo+WFUiKKLwSFcM0JoQQ5eg==}
-    dependencies:
-      fast-glob: 3.2.12
-      normalize-path: 3.0.0
     dev: true
 
   /esbuild/0.16.14:
@@ -3125,7 +3103,6 @@ packages:
 
   /fs.realpath/1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
-    dev: true
 
   /fsevents/2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
@@ -3183,7 +3160,6 @@ packages:
       inherits: 2.0.4
       minimatch: 5.1.2
       once: 1.4.0
-    dev: true
 
   /globals/11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -3407,7 +3383,6 @@ packages:
     dependencies:
       once: 1.4.0
       wrappy: 1.0.2
-    dev: true
 
   /inherits/2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -3834,7 +3809,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1
-    dev: true
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
@@ -3999,7 +3973,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yocto-queue: 0.1.0
-    dev: true
 
   /p-locate/4.1.0:
     resolution: {integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==}
@@ -5198,4 +5171,3 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-    dev: true

@@ -6,7 +6,7 @@ import  aliasPath  from 'esbuild-plugin-path-alias';
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 build({
-    watch: true,
+    // watch: true,
     bundle: true,
     target: 'node18',
     packages: 'external',
