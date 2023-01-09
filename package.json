@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "pnpm clean && concurrently \"pnpm build:server\" \"wait-on dist/server/index.cjs && pnpm start:server --watch dist/server\"",
     "clean": "rimraf dist",
-    "build": "pnpm clean && pnpm build:server && pnpm build:client",
+    "build": "NODE_ENV=production pnpm clean && pnpm build:ssr && pnpm build:client && pnpm build:server",
     "build:server": "node build.js",
     "build:client": "vite build --outDir dist/client",
     "build:ssr": "vite build --outDir dist/server --ssr src/ssr-entry.tsx --target node18",

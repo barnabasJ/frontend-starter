@@ -46,7 +46,6 @@ async function startServer(
         }
 
 
-        await f.register(storePlugin)
 
         let vite
         if (!isProd) {
@@ -62,12 +61,10 @@ async function startServer(
             f.use(vite.middlewares)
         }
 
-
+        await f.register(storePlugin)
         f.get('/*', async (req, res) => {
-            console.log({req, res})
-            const url = req.originalUrl
 
-            console.log('get "/"')
+            const url = req.url
 
             try {
                 // 1. Read index.html
@@ -78,6 +75,8 @@ async function startServer(
                     : path.resolve(__dirname, '../../', 'index.html'),
                     'utf-8',
                 )
+
+                console.log(req.store)
 
                 // 2. Apply Vite HTML transforms. This injects the Vite HMR client, and
                 //    also applies HTML transforms from Vite plugins, e.g. global preambles
