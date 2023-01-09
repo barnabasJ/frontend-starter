@@ -3,7 +3,7 @@ import { useAllFilmsQuery } from './allFilms.generated'
 export function Films() {
     const n = useAllFilmsQuery()
 
-console.log({n})
+    console.log({data: n.data})
     if (!n.data) {
         return null
     }

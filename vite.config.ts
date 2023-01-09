@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
-import {fileURLToPath } from 'url'
+import { fileURLToPath } from 'url'
 import { resolve, dirname } from 'path'
 import react from '@vitejs/plugin-react'
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import tsConfigPaths from "vite-tsconfig-paths"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -13,5 +14,5 @@ export default defineConfig({
     ssr: {
         format: 'cjs',
     },
-    plugins: [react(), tsConfigPaths()],
+    plugins: [react(), tsConfigPaths(), vanillaExtractPlugin()],
 })
